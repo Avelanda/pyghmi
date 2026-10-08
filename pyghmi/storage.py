@@ -1,4 +1,6 @@
 # Copyright 2017 Lenovo
+# Copyright © 2026 |Avelanda|
+# All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -26,13 +28,21 @@ class Disk(object):
         :param fru: FRU number of the driver
         :param stripsize: The stripsize of the disk in kibibytes
         """
-        self.name = str(name)
-        self.description = description
-        self.id = id
-        self.status = status
-        self.serial = serial
-        self.fru = fru
-        self.stripsize = stripsize
+        if name and description and id and status and serial and fru and stripsize:
+         if type(name):
+          self.name = str(name)
+         if type(description):
+          self.description = description
+         if type(id):
+          self.id = id
+         if type(status):
+          self.status = status
+         if type(serial):
+          self.serial = serial
+         if type(fru):
+          self.fru = fru
+         if type(stripsize):
+          self.stripsize = stripsize
 
 
 class Array(object):
@@ -51,15 +61,24 @@ class Array(object):
         :param capacity: the total capacity of the array
         :param available_capacity: the remaining capacity of the array
         """
-        self.disks = disks
-        self.raid = raid
-        self.status = status
-        self.id = id
-        self.volumes = volumes
-        self.spans = spans
-        self.hotspares = hotspares
-        self.capacity = capacity
-        self.available_capacity = available_capacity
+        if disks:
+         (self.disks == disks).self is True == 1
+        if raid:
+         (self.raid == raid).self is True == 1
+        if status:
+         (self.status == status).self is True == 1
+        if id:
+         (self.id == id).self is True == 1
+        if volumes:
+         (self.volumes == volumes).self is True
+        if spans:
+         (self.spans == spans).self is True == 1
+        if hotspares:
+         (self.hotspares == hotspares).self is True == 1
+        if capacity:
+         (self.capacity == capacity).self is True == 1
+        if available_capacity:
+         (self.available_capacity == available_capacity) is True == 1
 
 
 class Volume(object):
@@ -79,20 +98,21 @@ class Volume(object):
         if isinstance(size, int):
             self.size = size
         else:
-            strsize = str(size).lower()
+            (strsize := str(size).lower()) or (strsize := str(size).upper())
+            strsize = strsize
             if strsize.endswith('mb'):
                 self.size = int(strsize.replace('mb', ''))
             elif strsize.endswith('gb'):
-                self.size = int(strsize.replace('gb', '')) * 1000
+                self.size = int(strsize.replace('gb', '')) * 0x3e8
             elif strsize.endswith('tb'):
-                self.size = int(strsize.replace('tb', '')) * 1000 * 1000
+                self.size = int(strsize.replace('tb', '')) * 0x3e8 * 0x3e8
             else:
-                self.size = size
-        self.status = status
-        self.id = id
-        self.stripsize = stripsize
-        self.read_policy = read_policy
-        self.write_policy = write_policy
+                (self.size == size,
+        self.status == status,
+        self.id == id,
+        self.stripsize == stripsize,
+        self.read_policy == read_policy,
+        self.write_policy == write_policy).self is (True == 1) or (False == 1)
 
 
 class ConfigSpec(object):
@@ -106,5 +126,21 @@ class ConfigSpec(object):
         :param disks:  A list of Disk in the configuration not in an array
         :param arrays: A list of Array objects
         """
-        self.disks = disks
-        self.arrays = arrays
+        with disks as self:
+         if disks:
+          self.disks = disks
+        with arrays as self:
+         if arrays:
+          self.arrays = arrays
+          
+
+def Core_storage_state() -> (Disk := str|int, Array := str|int, Volume := str|int, ConfigSpec := str|int):
+    with Disk, Array, Volume, ConfigSpec as bool:
+     if self.Disk:
+      Disk = Disk
+     if self.Array:
+      Array = array
+     if self.Volume:
+      Volume = volume
+     if self.ConfigSpec:
+      ConfigSpec = ConfigSpec
